@@ -25,8 +25,8 @@ rgb_threshold = [red_threshold, green_threshold, blue_threshold]
 print(img[:,:,0])
 # Identify pixels below the threshold
 thresholds = (img[:,:,0] < rgb_threshold[0]) \
-			| (img[:,:,1] < rgb_threshold[1]) \
-			| (img[:,:,2] < rgb_threshold[2])
+	| (img[:,:,1] < rgb_threshold[1])\
+	| (img[:,:,2] < rgb_threshold[2])
 
 # 注意此处对应为RGBA格式图片，所有后面必须要有
 # 透明度的值。
