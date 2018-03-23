@@ -11,7 +11,7 @@
 from matplotlib import pyplot as plt
 from matplotlib import image as mpimg
 import numpy as np
-image = mpimg.imread('test.png')
+image = mpimg.imread('exit-ramp.jpg')
 plt.subplot(131)
 plt.imshow(image)
 plt.title('origin')
@@ -60,7 +60,7 @@ blur_gray = cv2.GaussianBlur(gray, (kernel_size, kernel_size), 0)
 # 这里的处理是因为matplotlib读入的图像的像素值是在范围0-1之间的
 # 所以需要在canny之间缩放2^8倍。
 
-blur_gray = np.uint8(blur_gray* 256) 
+#blur_gray = np.uint8(blur_gray* 256) 
 # print(blur_gray)
 # print(blur_gray.dtype)
 # print(cv2.__version__)
@@ -70,7 +70,7 @@ blur_gray = np.uint8(blur_gray* 256)
 # cv2.destroyAllWindows()
 
 # define parameters for canny 
-low_threshold = 100
+low_threshold = 50
 high_threshold = 200
 edges = cv2.Canny(blur_gray, low_threshold, high_threshold)
 
