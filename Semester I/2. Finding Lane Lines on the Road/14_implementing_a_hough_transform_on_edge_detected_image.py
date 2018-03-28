@@ -41,22 +41,29 @@ low_threshold = 50
 high_threshold = 150
 edges = cv2.Canny(blur_gray, low_threshold,high_threshold)
 
+mask = np.zeros_like(edges)
+ignore_mask_color = 255
+imageshape = image.shape
+vertices = np.array([[(0,imageshape[0]), (450,290), (490, 290), (imageshape[1], imageshape[0])]], dtype=np.int32)
+cv2.fillPoly(mask, vertices, ignore_mask_color)
+masked_edges = cv2.bitwise_and(edges, mask)
+
 # define the hough transform parameters
 # make a blank the same size as our image to draw on
-rho = 1
+rho = 2
 theta = np.pi/180
-threshold = 20
-min_line_length = 150
-max_line_gap = 10
+threshold = 25
+min_line_length = 40
+max_line_gap = 15
 line_image = np.copy(image)*0
 
 # run hough on edge detected image
-lines = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
+lines = cv2.HoughLinesP(masked_edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
 
 # draw
 for line in lines:
 	for x1,y1,x2,y2 in line:
-		cv2.line(line_image, (x1,y1), (x2,y2), (255,0,0), 2)
+		cv2.line(line_image, (x1,y1), (x2,y2), (0,0,255), 2)
 
 # create a 'color' binary image to  combine with line image
 color_edges = np.dstack((edges, edges, edges))
